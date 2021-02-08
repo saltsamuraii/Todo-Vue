@@ -1,14 +1,19 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Todo App</h1>
         <label for="input"> Add todo
-            <input type="text" id="input" v-model="newTodoText"/>
+            <input id="input" v-model="newTodoText"/>
         </label>
-        <ol>
-            <li v-for="(todo, key) of todos" :key="key" :todo="todo"> {{ todo }} </li>
-        </ol>
-        <button @click="addTodo">Add</button>
-        <button @click="removeTodo">Remove</button>
+        <ul>
+            <li v-for="(todo, key) of todos"
+                :key="key"
+                :todo="todo"
+            >
+                {{ todo }}
+                <button @click="removeTodo(todo)"> remove </button>
+            </li>
+        </ul>
+        <button @click="addTodo" @click.enter="">Add</button>
     </div>
 </template>
 
@@ -27,12 +32,15 @@
         methods: {
             addTodo() {
               this.todos.push(this.newTodoText);
+                this.newTodoText = ''
             },
 
-            removeTodo() {
-                this.todos.pop()
-            }
-        }
+            removeTodo(removeTodoItem) {
+               this.todos = this.todos.filter((todo) => {
+                    return todo !== removeTodoItem
+                });
+            },
+        },
     }
 </script>
 
